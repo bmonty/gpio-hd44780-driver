@@ -134,8 +134,7 @@ module.exports = class {
      * @param writeWait the time to wait between writes, min 37 microseconds from spec
      * @param initWait set to true if writing the init sequence, adds the required extra time between writes
      */
-    _write8Bits(value, registerSelect=false, writeWait=50, initWait=0) {
-        // wait 50 microseconds to prevent writing too quickly
+    _write8Bits(value, registerSelect=false, writeWait=500, initWait=0) {
         rpio.usleep(writeWait);
         
         // set the R/W pin
