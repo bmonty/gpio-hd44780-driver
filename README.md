@@ -1,14 +1,13 @@
 This a Node.js module for using an LCD panel with a HD44780 LCD controller.  It is intended to be used in projects that require LCD output and abstracts the setup and operation of the LCD.  This module assumes you are running on hardware with a General Purpose (GPIO) interface such as a Raspberry Pi.  Other hardware platforms are supported if they are supported by the [rpio](https://www.npmjs.com/package/rpio) module.  
 
-**Wiring Requirements**
 The HD44780 must be wired in the 4-bit data mode configuration (i.e DB4 - DB7 are connected and DB0 - DB3 are not).  In addition, the Read/Write signal (R/W) must be pulled low.  The R/W signal is not used by the driver.
 
 gpio-hd44780-driver is intended to be used with Node.js version 8 and higher.
 
 # Installation
-`
+```
 npm install gpio-hd44780-driver
-`
+```
 
 You must have the appropriate packages installed so your platform can compile drivers used by the `rpio` module.
 
