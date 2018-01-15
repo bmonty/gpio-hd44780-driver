@@ -1,4 +1,4 @@
-import rpio from 'rpio';
+const rpio = require('rpio');
 
 const command = {
     CLEARDISPLAY: 0x01,
@@ -44,7 +44,7 @@ const functionSetFlags = {
     FIVEBYEIGHTDOTS: 0x00
 };
 
-export default class hd44780Driver {
+module.exports = class {
     /**
      * Creates a new Lcd class.  The constructor takes an object with information
      * on your LCD's size and how it is connected to GPIO.
@@ -77,15 +77,15 @@ export default class hd44780Driver {
         });
 
         // send the HD44780's reset sequence
-        write8Bits(0x33, false, 1, 4100);
-        write8Bits(0x32, false, 1, 100);
+        this._write8Bits(0x33, false, 1, 4100);
+        this._write8Bits(0x32, false, 1, 100);
 
         // write registers
-        write8Bits(command.DISPLAYCONTROL | controlFlags.DISPLAYON | controlFlags.CURSOROFF | controlFlags.BLINKOFF);
-        write8Bits(command.FUNCTIONSET | functionSetFlags.FOURBITMODE | functionSetFlags.TWOLINE | functionSetFlags.FIVEBYEIGHTDOTS);
-        write8Bits(command.ENTRYMODESET | entryModeFlags.ENTRYLEFT | entryModeFlags.ENTRYSHIFTDECREMENT);
+        this._write8Bits(command.DISPLAYCONTROL | controlFlags.DISPLAYON | controlFlags.CURSOROFF | controlFlags.BLINKOFF);
+        this._write8Bits(command.FUNCTIONSET | functionSetFlags.FOURBITMODE | functionSetFlags.TWOLINE | functionSetFlags.FIVEBYEIGHTDOTS);
+        this._write8Bits(command.ENTRYMODESET | entryModeFlags.ENTRYLEFT | entryModeFlags.ENTRYSHIFTDECREMENT);
         
-        clear();
+        this.clear();
     }
 
     /**
@@ -106,9 +106,9 @@ export default class hd44780Driver {
         Array.from(str).forEach(char => {
             if (char === '\n') {
                 row += 1;
-                setCursor(0, row);  
+                this.setCursor(0, row);  
             } else {
-                write8Bits(char.charCodeAt(0), 1);
+                this._write8Bits(char.charCodeAt(0), true);
             }
         });
     }
@@ -123,7 +123,7 @@ export default class hd44780Driver {
         // clamp row to the last row of the display
         const r = row > this.lcdRows - 1 ? this.lcdRows - 1 : row;
         // set location
-        write8Bits(command.SETDDRAMADDR | (col + ROWOFFSETS[r]));
+        this._write8Bits(command.SETDDRAMADDR | (col + ROWOFFSETS[r]));
     }
 
     /**
@@ -139,7 +139,11 @@ export default class hd44780Driver {
         rpio.usleep(writeWait);
         
         // set the R/W pin
-        rpio.write(this.pinRs, registerSelect);
+        if (registerSelect) {
+            rpio.write(this.pinRs, rpio.HIGH);
+        } else {
+            rpio.write(this.pinRs, rpio.LOW);
+        }
 
         // write upper 4 bits
         var i;
@@ -174,3 +178,4 @@ export default class hd44780Driver {
         rpio.usleep(1);
     }
 }
+
