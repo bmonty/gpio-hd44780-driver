@@ -1,0 +1,18 @@
+{
+  "name": "gpio-hd44780-driver",
+  "version": "0.1.0",
+  "description": "GPIO driver for the HD44780 LCD display",
+  "main": "hd44780-driver.js",
+  "keywords": [
+    "hd44780",
+    "lcd",
+    "gpio",
+    "raspberry",
+    "raspberrypi"
+  ],
+  "author": "Benjamin Montgomery <bmontgom@montynet.org>",
+  "license": "MIT",
+  "dependencies": {
+    "rpio": "^0.9.20"
+  }
+}
