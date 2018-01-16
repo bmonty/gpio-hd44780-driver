@@ -1,6 +1,6 @@
 {
   "name": "gpio-hd44780-driver",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "GPIO driver for the HD44780 LCD display",
   "main": "hd44780-driver.js",
   "repository": "github:bmonty/gpio-hd44780-driver",
