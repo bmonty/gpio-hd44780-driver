@@ -89,10 +89,11 @@ module.exports = class {
     }
 
     /**
-     * Clears the entire display and moves the cursor to 0,0.
+     * Clears the entire display and moves the cursor to 0,0. This method has a built-in 100 msec delay.
      */
     clear() {
         this._write8Bits(command.CLEARDISPLAY);
+        rpio.msleep(500);
     }
 
     /**

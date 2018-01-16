@@ -32,7 +32,8 @@ All options are required.
 
 ## `clear()`
 
-Clears the LCD panel and resets the cursor position to 0,0.
+Clears the LCD panel and resets the cursor position to 0,0.  This function takes some time for the HD44780 to complete and 
+it has a built-in 100 msec delay.
 
 ## `print(str)`
 
